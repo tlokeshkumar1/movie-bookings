@@ -12,7 +12,7 @@ export default function Selection() {
   const addBooking = useBookingStore((state) => state.addBooking);
 
   const [tickets, setTickets] = useState(1);
-  const [time, setTime] = useState('18:00'); // Default to 18:00 as shown in the image
+  const [time, setTime] = useState('12:00');
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [loading, setLoading] = useState(false);
 
