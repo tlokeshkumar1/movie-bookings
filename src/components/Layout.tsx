@@ -1,13 +1,31 @@
 import { Globe, MonitorPlay, Download, LogOut } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/auth';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   const { username, logout } = useAuthStore();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when pathname changes
+  useEffect(() => {
+    setShowDropdown(false);
+  }, [pathname]);
+
+  // Handle clicks outside the dropdown
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -15,8 +33,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="flex min-h-screen p-4 bg-gray-50">
-      <aside className="w-64 bg-black text-white p-6 rounded-2xl shadow-lg">
+    <div className="flex min-h-screen bg-gray-50">
+      <aside className="w-64 bg-black text-white p-6 rounded-2xl shadow-lg m-4">
         <div className="flex items-center gap-3 mb-12">
           <Globe className="w-6 h-6" />
           <span className="text-xl font-semibold">Almanack</span>
@@ -48,15 +66,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </nav>
       </aside>
 
-      <main className="flex-1 p-0 bg-white rounded-2xl shadow-lg ml-6">
-        <div className="flex justify-end items-center mb-4">
-          {pathname === '/booking' && (
-            <h1 className="text-xl font-bold flex-1 mr-4">Good Morning Mr. {username}!</h1>
-          )}
-          {pathname === '/activity' && (
-            <h1 className="text-xl font-bold flex-1 mr-4">Activity</h1>
-          )}
-          <div className="relative">
+      <main className="flex-1 m-4">
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-4">
+            {pathname === '/booking' && (
+              <div>
+                <h1 className="text-xl font-bold">
+                  Good Morning, Mr. {username?.split('.').map(word => 
+                    word.charAt(0).toUpperCase() + word.slice(1)
+                  ).join(' ')}!
+                </h1>
+              </div>
+            )}
+            {pathname === '/activity' && (
+              <h1 className="text-xl font-bold">Activity</h1>
+            )}
+          </div>
+          <div className="relative" ref={dropdownRef}>
             <div 
               className="flex items-center gap-2 cursor-pointer"
               onClick={() => setShowDropdown(!showDropdown)}
@@ -84,7 +110,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </div>
         </div>
-        <div className="p-4">{children}</div> {/* Added padding inside the main content */}
+        <div className="mt-4">{children}</div>
       </main>
     </div>
   );
