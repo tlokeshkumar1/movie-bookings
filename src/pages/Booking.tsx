@@ -41,7 +41,7 @@ export default function Booking() {
               <img
                 src={movie.image}
                 alt={movie.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                className="w-full h-full object-cover"
               />
             </div>
             <h3 className="font-medium">
