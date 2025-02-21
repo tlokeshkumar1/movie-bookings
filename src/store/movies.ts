@@ -12,7 +12,7 @@ const MOVIES = [
     id: '2',
     name: 'Lucky Bhaskar',
     year: 2022,
-    image: 'https://images.unsplash.com/photo-1628432136678-43ff9be34064?w=800&h=600&fit=crop',
+    image: 'https://static.tnn.in/photo/msid-114812919/114812919.jpg',
   },
   {
     id: '3',
