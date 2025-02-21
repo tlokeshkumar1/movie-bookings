@@ -12,7 +12,7 @@ export default function Selection() {
   const addBooking = useBookingStore((state) => state.addBooking);
 
   const [tickets, setTickets] = useState(1);
-  const [time, setTime] = useState('12:00');
+  const [time, setTime] = useState('18:00'); // Default to 18:00 as shown in the image
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [loading, setLoading] = useState(false);
 
@@ -38,7 +38,7 @@ export default function Selection() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
+    <div className="max-w-2xl mx-auto p-4 bg-white">
       <div className="aspect-[21/9] rounded-lg overflow-hidden mb-4">
         <img
           src={selectedMovie.image}
@@ -52,80 +52,83 @@ export default function Selection() {
       </h2>
 
       <div className="space-y-4">
-        <div>
-          <label className="block text-sm mb-1">Ticket Count</label>
+        {/* Ticket Count: Label and Input Side by Side */}
+        <div className="flex items-center gap-2">
+          <label className="text-sm font-medium">Ticket Count</label>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setTickets(Math.max(1, tickets - 1))}
-              className="p-1 rounded-lg bg-black text-white"
+              className="p-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors duration-200"
             >
-              <Minus className="w-3 h-3" />
+              <Minus className="w-4 h-4" />
             </button>
-            <span className="text-lg font-medium w-6 text-center">
+            <span className="text-xl font-medium w-8 text-center">
               {tickets}
             </span>
             <button
               onClick={() => setTickets(tickets + 1)}
-              className="p-1 rounded-lg bg-black text-white"
+              className="p-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors duration-200"
             >
-              <Plus className="w-3 h-3" />
+              <Plus className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm mb-1">Show Time</label>
+        {/* Show Time: Label and Input Side by Side */}
+        <div className="flex items-center gap-2">
+          <label className="text-sm font-medium">Show Time</label>
           <div className="flex gap-2">
             <button
               onClick={() => setTime('09:00')}
-              className={`flex items-center gap-1 px-3 py-1 rounded-lg ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
                 time === '09:00'
                   ? 'bg-black text-white'
-                  : 'bg-gray-100'
+                  : 'bg-gray-200 hover:bg-gray-300'
               }`}
             >
-              <Sun className="w-3 h-3" />
+              <Sun className="w-4 h-4" />
               <span className="text-sm">9:00</span>
             </button>
             <button
               onClick={() => setTime('12:00')}
-              className={`flex items-center gap-1 px-3 py-1 rounded-lg ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
                 time === '12:00'
                   ? 'bg-black text-white'
-                  : 'bg-gray-100'
+                  : 'bg-gray-200 hover:bg-gray-300'
               }`}
             >
-              <Globe className="w-3 h-3" />
+              <Globe className="w-4 h-4" />
               <span className="text-sm">12:00</span>
             </button>
             <button
               onClick={() => setTime('18:00')}
-              className={`flex items-center gap-1 px-3 py-1 rounded-lg ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
                 time === '18:00'
                   ? 'bg-black text-white'
-                  : 'bg-gray-100'
+                  : 'bg-gray-200 hover:bg-gray-300'
               }`}
             >
-              <Moon className="w-3 h-3" />
+              <Moon className="w-4 h-4" />
               <span className="text-sm">18:00</span>
             </button>
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm mb-1">Date</label>
+        {/* Date: Label and Input Side by Side */}
+        <div className="flex items-center gap-2">
+          <label className="text-sm font-medium">Date</label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full px-3 py-1 rounded-lg bg-gray-100 text-sm"
+            className="px-3 py-2 rounded-lg bg-gray-200 text-sm w-32" // Shortened width to w-32 (128px)
           />
         </div>
 
         <button
           onClick={handleBook}
           disabled={loading}
-          className="w-full bg-black text-white py-2 rounded-lg font-medium text-sm disabled:opacity-50"
+          className="w-full bg-black text-white py-3 rounded-lg font-medium text-sm hover:bg-gray-800 transition-colors duration-200 disabled:opacity-50"
         >
           {loading ? 'Booking...' : 'Book Ticket'}
         </button>
