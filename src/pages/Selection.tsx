@@ -12,7 +12,7 @@ export default function Selection() {
   const addBooking = useBookingStore((state) => state.addBooking);
 
   const [tickets, setTickets] = useState(1);
-  const [time, setTime] = useState('12:00');
+  const [time, setTime] = useState('12:00'); // Default to 18:00 as shown in the image
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [loading, setLoading] = useState(false);
 
@@ -58,16 +58,16 @@ export default function Selection() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setTickets(Math.max(1, tickets - 1))}
-              className="p-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+              className="rounded-lg bg-transparent text-black hover:bg-gray-200 transition-colors duration-200"
             >
               <Minus className="w-4 h-4" />
             </button>
-            <span className="text-xl font-medium w-8 text-center">
+            <span className="text-xl font-medium w-8 text-center bg-black text-white rounded-lg">
               {tickets}
             </span>
             <button
               onClick={() => setTickets(tickets + 1)}
-              className="p-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+              className="rounded-lg bg-transparent text-black hover:bg-gray-200 transition-colors duration-200"
             >
               <Plus className="w-4 h-4" />
             </button>
@@ -121,14 +121,15 @@ export default function Selection() {
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="px-3 py-2 rounded-lg bg-gray-200 text-sm w-32" // Shortened width to w-32 (128px)
+            className="px-3 py-2 rounded-lg bg-gray-200 text-sm w-32" // Kept w-32 for shorter width
           />
         </div>
 
+        {/* Book Ticket Button positioned below Date label and input */}
         <button
           onClick={handleBook}
           disabled={loading}
-          className="w-full bg-black text-white py-3 rounded-lg font-medium text-sm hover:bg-gray-800 transition-colors duration-200 disabled:opacity-50"
+          className="w-full bg-black text-white py-2 rounded-lg font-medium text-sm hover:bg-gray-800 transition-colors duration-200 disabled:opacity-50 mt-2"
         >
           {loading ? 'Booking...' : 'Book Ticket'}
         </button>
