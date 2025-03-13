@@ -58,6 +58,11 @@ export default function Login() {
           >
             Login
           </button>
+          <div className="mt-4 text-gray-400 text-xs text-center">
+            <p>Use these credentials for testing:</p>
+            <p>Username: naval.ravikant</p>
+            <p>Password: 05111974</p>
+          </div>
         </form>
       </div>
     </div>
